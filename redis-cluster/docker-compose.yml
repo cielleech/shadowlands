@@ -1,20 +1,17 @@
 version: "2.0"
 
-networks:
-  redis-net:
-    driver: bridge
-
 services:
   redis7000:
     image: redis
     hostname: redis-7000
     container_name: redis-7000
-    networks:
-      - redis-net
     volumes:
       - /e/cielleech/workspace/docker/vox-docker/volumes/redis-cluster/7000/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - 7000:7000
+    networks:
+      redis-net:
+        ipv4_address: 10.5.0.5
     command:
       - redis-server
       - /usr/local/etc/redis/redis.conf
@@ -25,7 +22,8 @@ services:
     hostname: redis-7001
     container_name: redis-7001
     networks:
-      - redis-net
+      redis-net:
+        ipv4_address: 10.5.0.6
     volumes:
       - /e/cielleech/workspace/docker/vox-docker/volumes/redis-cluster/7001/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
@@ -39,7 +37,8 @@ services:
     hostname: redis-7002
     container_name: redis-7002
     networks:
-      - redis-net
+      redis-net:
+        ipv4_address: 10.5.0.7
     volumes:
       - /e/cielleech/workspace/docker/vox-docker/volumes/redis-cluster/7002/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
@@ -53,7 +52,8 @@ services:
     hostname: redis-7003
     container_name: redis-7003
     networks:
-      - redis-net
+      redis-net:
+        ipv4_address: 10.5.0.8
     volumes:
       - /e/cielleech/workspace/docker/vox-docker/volumes/redis-cluster/7003/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
@@ -67,7 +67,8 @@ services:
     hostname: redis-7004
     container_name: redis-7004
     networks:
-      - redis-net
+      redis-net:
+        ipv4_address: 10.5.0.9
     volumes:
       - /e/cielleech/workspace/docker/vox-docker/volumes/redis-cluster/7004/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
@@ -81,7 +82,8 @@ services:
     hostname: redis-7005
     container_name: redis-7005
     networks:
-      - redis-net
+      redis-net:
+        ipv4_address: 10.5.0.10
     volumes:
       - /e/cielleech/workspace/docker/vox-docker/volumes/redis-cluster/7005/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
@@ -90,4 +92,10 @@ services:
       - redis-server
       - /usr/local/etc/redis/redis.conf
 
-  
+networks:
+  redis-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
