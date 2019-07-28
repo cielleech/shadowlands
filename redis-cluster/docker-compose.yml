@@ -1,12 +1,18 @@
 version: "2.0"
 
+networks:
+  redis-net:
+    driver: bridge
+
 services:
   redis7000:
     image: redis
     hostname: redis-7000
     container_name: redis-7000
+    networks:
+      - redis-net
     volumes:
-      - /Users/cielleech/Documents/workspace/docker/vox-docker/volumes/redis-cluster/7000/conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - /e/cielleech/workspace/docker/vox-docker/volumes/redis-cluster/7000/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - 7000:7000
     command:
@@ -18,8 +24,10 @@ services:
     image: redis
     hostname: redis-7001
     container_name: redis-7001
+    networks:
+      - redis-net
     volumes:
-      - /Users/cielleech/Documents/workspace/docker/vox-docker/volumes/redis-cluster/7001/conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - /e/cielleech/workspace/docker/vox-docker/volumes/redis-cluster/7001/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - 7001:7001
     command:
@@ -30,8 +38,10 @@ services:
     image: redis
     hostname: redis-7002
     container_name: redis-7002
+    networks:
+      - redis-net
     volumes:
-      - /Users/cielleech/Documents/workspace/docker/vox-docker/volumes/redis-cluster/7002/conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - /e/cielleech/workspace/docker/vox-docker/volumes/redis-cluster/7002/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - 7002:7002
     command:
@@ -42,8 +52,10 @@ services:
     image: redis
     hostname: redis-7003
     container_name: redis-7003
+    networks:
+      - redis-net
     volumes:
-      - /Users/cielleech/Documents/workspace/docker/vox-docker/volumes/redis-cluster/7003/conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - /e/cielleech/workspace/docker/vox-docker/volumes/redis-cluster/7003/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - 7003:7003
     command:
@@ -54,8 +66,10 @@ services:
     image: redis
     hostname: redis-7004
     container_name: redis-7004
+    networks:
+      - redis-net
     volumes:
-      - /Users/cielleech/Documents/workspace/docker/vox-docker/volumes/redis-cluster/7004/conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - /e/cielleech/workspace/docker/vox-docker/volumes/redis-cluster/7004/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - 7004:7004
     command:
@@ -66,10 +80,14 @@ services:
     image: redis
     hostname: redis-7005
     container_name: redis-7005
+    networks:
+      - redis-net
     volumes:
-      - /Users/cielleech/Documents/workspace/docker/vox-docker/volumes/redis-cluster/7005/conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - /e/cielleech/workspace/docker/vox-docker/volumes/redis-cluster/7005/conf/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - 7005:7005
     command:
       - redis-server
       - /usr/local/etc/redis/redis.conf
+
+  
