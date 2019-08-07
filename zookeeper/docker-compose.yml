@@ -2,7 +2,7 @@ version: '2'
 
 services:
   zoo1:
-    image: zookeeper:3.4.14
+    image: zookeeper:3.4.11
     hostname: zoo1
     container_name: zoo1
     ports:
