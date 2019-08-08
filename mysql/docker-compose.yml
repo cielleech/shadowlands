@@ -1,0 +1,13 @@
+version: "3.3"
+
+services:
+  vox-mysql:
+    image: mysql:5.7.20
+    hostname: vox-mysql
+    container_name: vox-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=vox123
+    ports:
+      - 3306:3306
+    volumes:
+      - ./volumes/data:/var/lib/mysql
