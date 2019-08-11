@@ -1,0 +1,1 @@
+docker network create -d bridge --gateway 10.8.0.1 --subnet 10.8.0.0/16 base-net
