@@ -51,13 +51,13 @@ services:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
     ports:
       - "9083:9083"
-  presto-coordinator:
-    image: shawnzhu/prestodb:0.181
-    networks:
-      default:
-        ipv4_address: 10.8.0.14
-    ports:
-      - "8080:8080"
+#  presto-coordinator:
+#    image: shawnzhu/prestodb:0.181
+#    networks:
+#      default:
+#        ipv4_address: 10.8.0.14
+#    ports:
+#      - "8080:8080"
 
 volumes:
   namenode:
