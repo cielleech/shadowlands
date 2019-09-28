@@ -24,7 +24,7 @@
 
 
 # Hive Client memory usage can be an issue if a large number of clients
-# are running at the same time. The flags below have been useful in 
+# are running at the same time. The flags below have been useful in
 # reducing memory usage:
 #
 # if [ "$SERVICE" = "cli" ]; then
@@ -39,8 +39,8 @@
 #
 # export HADOOP_HEAPSIZE=1024
 #
-# Larger heap size may be required when running queries over large number of files or partitions. 
-# By default hive shell scripts use a heap size of 256 (MB).  Larger heap size would also be 
+# Larger heap size may be required when running queries over large number of files or partitions.
+# By default hive shell scripts use a heap size of 256 (MB).  Larger heap size would also be
 # appropriate for hive server (hwi etc).
 
 
