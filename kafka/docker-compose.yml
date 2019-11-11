@@ -5,6 +5,9 @@ services:
     image: wurstmeister/zookeeper
     restart: unless-stopped
     hostname: zoo
+    networks:
+      default:
+        ipv4_address: 10.8.1.3
     ports:
       - "2181:2181"
     container_name: zookeeper
@@ -13,6 +16,9 @@ services:
   # scala version: 2.12
   kafka:
     image: wurstmeister/kafka
+    networks:
+      default:
+        ipv4_address: 10.8.1.4
     ports:
       - "9092:9092"
     environment:
@@ -24,3 +30,9 @@ services:
     depends_on:
       - zoo
     container_name: kafka
+
+
+networks:
+  default:
+    external:
+      name: base-net
