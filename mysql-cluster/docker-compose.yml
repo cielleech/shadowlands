@@ -1,0 +1,36 @@
+version: "3.3"
+
+services:
+  mysql1:
+    image: mysql:5.7.20
+    hostname: mysql1
+    container_name: mysql1
+    networks:
+      default:
+        ipv4_address: 172.18.0.15
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=vox123
+    ports:
+      - 13306:3306
+    volumes:
+      - ./volumes/data1:/var/lib/mysql
+  mysql2:
+    image: mysql:5.7.20
+    hostname: mysql2
+    container_name: mysql2
+    networks:
+      default:
+        ipv4_address: 172.18.0.16
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=vox123
+    ports:
+      - 13307:3306
+    volumes:
+      - ./volumes/data2:/var/lib/mysql      
+
+networks:
+  default:
+    external:
+      name: base-net

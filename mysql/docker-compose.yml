@@ -1,13 +1,13 @@
 version: "3.3"
 
 services:
-  vox-mysql:
+  mysql:
     image: mysql:5.7.20
-    hostname: vox-mysql
-    container_name: vox-mysql
+    hostname: mysql
+    container_name: mysql
     networks:
       default:
-        ipv4_address: 10.8.0.3
+        ipv4_address: 172.18.0.10
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=vox123
