@@ -13,7 +13,7 @@ services:
       - discovery.zen.ping.unicast.hosts="elasticsearch1,elasticsearch2,elasticsearch3,elasticsearch4"
       - discovery.zen.minimum_master_nodes=1
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
     ulimits:
       memlock:
         soft: -1
@@ -23,7 +23,10 @@ services:
     ports:
       - 9200:9200
     networks:
-      - esnet
+      default:
+        ipv4_address: 10.8.0.21
+#    networks:
+#      - esnet
   elasticsearch2:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
     container_name: elasticsearch2
@@ -36,7 +39,7 @@ services:
       - http.cors.allow-origin=*
       - discovery.zen.ping.unicast.hosts="elasticsearch1,elasticsearch2,elasticsearch3,elasticsearch4"
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
     ulimits:
       memlock:
         soft: -1
@@ -44,7 +47,10 @@ services:
     volumes:
       - esdata2:/usr/share/elasticsearch/data
     networks:
-      - esnet
+      default:
+        ipv4_address: 10.8.0.22
+#    networks:
+#      - esnet
   elasticsearch3:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
     container_name: elasticsearch3
@@ -57,7 +63,7 @@ services:
       - http.cors.allow-origin=*      
       - discovery.zen.ping.unicast.hosts="elasticsearch1,elasticsearch2,elasticsearch3,elasticsearch4"
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
     ulimits:
       memlock:
         soft: -1
@@ -65,7 +71,10 @@ services:
     volumes:
       - esdata3:/usr/share/elasticsearch/data
     networks:
-      - esnet
+      default:
+        ipv4_address: 10.8.0.23
+#    networks:
+#      - esnet
   elasticsearch4:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.7.2
     container_name: elasticsearch4
@@ -75,10 +84,10 @@ services:
       - node.master=false
       - node.data=false
       - http.cors.enabled=true
-      - http.cors.allow-origin=*      
+      - http.cors.allow-origin=*
       - discovery.zen.ping.unicast.hosts="elasticsearch1,elasticsearch2,elasticsearch3,elasticsearch4"
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
     ulimits:
       memlock:
         soft: -1
@@ -86,7 +95,10 @@ services:
     volumes:
       - esdata4:/usr/share/elasticsearch/data
     networks:
-      - esnet      
+      default:
+        ipv4_address: 10.8.0.24
+#     networks:
+#      - esnet      
 
 volumes:
   esdata1:
@@ -98,5 +110,9 @@ volumes:
   esdata4:
     driver: local
 
+#networks:
+#  esnet:
 networks:
-  esnet:
+  default:
+    external:
+      name: base-net
