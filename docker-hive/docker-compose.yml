@@ -5,7 +5,7 @@ services:
     image: bde2020/hadoop-namenode:2.0.0-hadoop2.7.4-java8
     networks:
       default:
-        ipv4_address: 10.8.0.10
+        ipv4_address: 172.18.0.10
     volumes:
       - namenode:/hadoop/dfs/name
     environment:
@@ -13,12 +13,12 @@ services:
     env_file:
       - ./hadoop-hive.env
     ports:
-      - "5070:50070"
+      - "50070:50070"
   datanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
     networks:
       default:
-        ipv4_address: 10.8.0.11
+        ipv4_address: 172.18.0.11
     volumes:
       - datanode:/hadoop/dfs/data
     env_file:
@@ -26,16 +26,16 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:50070"
     ports:
-      - "5075:50075"
+      - "50075:50075"
   hive-server:
     image: cielleech/hive:2.3.2-mysql-metastore
     networks:
       default:
-        ipv4_address: 10.8.0.12
+        ipv4_address: 172.18.0.12
     env_file:
       - ./hadoop-hive.env
     environment:
-      HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:mysql://10.8.0.3:3306/hive"
+      HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:mysql://172.18.0.3:3306/hive"
       SERVICE_PRECONDITION: "hive-metastore:9083"
     ports:
       - "10000:10000"
@@ -43,7 +43,7 @@ services:
     image: cielleech/hive:2.3.2-mysql-metastore
     networks:
       default:
-        ipv4_address: 10.8.0.13
+        ipv4_address: 172.18.0.13
     env_file:
       - ./hadoop-hive.env
     command: /opt/hive/bin/hive --service metastore

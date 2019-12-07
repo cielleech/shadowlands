@@ -7,7 +7,7 @@ services:
     container_name: vox-mysql
     networks:
       default:
-        ipv4_address: 10.8.0.3
+        ipv4_address: 172.18.0.3
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=vox123
