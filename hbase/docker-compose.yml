@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   namenode:
@@ -8,12 +8,12 @@ services:
       default:
         ipv4_address: 172.18.1.31
     volumes:
-      - namenode:/hadoop/dfs/name
+      - hadoop_namenode:/hadoop/dfs/name
     environment:
-      - CLUSTER_NAME=vox
+      - CLUSTER_NAME=vox-cluster
     env_file:
       - ./hadoop.env
-      
+
   datanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
     container_name: datanode
@@ -21,12 +21,12 @@ services:
       default:
         ipv4_address: 172.18.1.32
     volumes:
-      - datanode:/hadoop/dfs/data
+      - hadoop_datanode:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:50070"
     env_file:
       - ./hadoop.env
-
+  
   resourcemanager:
     image: bde2020/hadoop-resourcemanager:2.0.0-hadoop2.7.4-java8
     container_name: resourcemanager
@@ -49,14 +49,14 @@ services:
     env_file:
       - ./hadoop.env
 
-  history:
+  historyserver:
     image: bde2020/hadoop-historyserver:2.0.0-hadoop2.7.4-java8
     container_name: historyserver
     networks:
       default:
         ipv4_address: 172.18.1.35
     volumes:
-      - historyserver:/hadoop/yarn/timeline
+      - hadoop_historyserver:/hadoop/yarn/timeline
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075 resourcemanager:8088"
     env_file:
@@ -67,19 +67,27 @@ services:
     container_name: hbase
     networks:
       default:
-        ipv4_address: 172.18.1.40
+        ipv4_address: 172.18.1.41
     volumes:
       - hbase_data:/hbase-data
-      - hbase_zookeeper_data:/zookeeper-data
+      - hbase_zookeeper_data:/zookeper-data
+    ports:
+      - 16000:16000
+      - 16010:16010
+      - 16020:16020
+      - 16030:16030
+      - 2888:2888
+      - 3888:3888
+      - 2181:2181
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
     env_file:
       - ./hbase-standalone.env
-  
+
 volumes:
-  namenode:
-  datanode:
-  historyserver:
+  hadoop_namenode:
+  hadoop_datanode:
+  hadoop_historyserver:
   hbase_data:
   hbase_zookeeper_data:
 

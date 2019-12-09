@@ -5,7 +5,7 @@ services:
     image: bde2020/hadoop-namenode:2.0.0-hadoop2.7.4-java8
     networks:
       default:
-        ipv4_address: 10.8.0.10
+        ipv4_address: 172.18.1.31
     volumes:
       - namenode:/hadoop/dfs/name
     environment:
@@ -18,7 +18,7 @@ services:
     image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
     networks:
       default:
-        ipv4_address: 10.8.0.11
+        ipv4_address: 172.18.1.32
     volumes:
       - datanode:/hadoop/dfs/data
     env_file:
@@ -31,7 +31,7 @@ services:
     image: cielleech/hive:2.3.2-mysql-metastore
     networks:
       default:
-        ipv4_address: 10.8.0.12
+        ipv4_address: 172.18.1.33
     env_file:
       - ./hadoop-hive.env
     environment:
@@ -43,7 +43,7 @@ services:
     image: cielleech/hive:2.3.2-mysql-metastore
     networks:
       default:
-        ipv4_address: 10.8.0.13
+        ipv4_address: 172.18.1.34
     env_file:
       - ./hadoop-hive.env
     command: /opt/hive/bin/hive --service metastore
