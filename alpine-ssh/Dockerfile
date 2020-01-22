@@ -1,5 +1,5 @@
 # 设置继承镜像
-FROM alpine:latest
+FROM alpine:3.8
 # 提供一些作者的信息
 MAINTAINER cielleech (cielleech@qq.com)
 # 下面开始运行更新命令
