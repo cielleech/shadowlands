@@ -24,7 +24,7 @@ services:
       - 9200:9200
     networks:
       default:
-        ipv4_address: 10.8.0.21
+        ipv4_address: 172.18.0.21
 #    networks:
 #      - esnet
   elasticsearch2:
@@ -48,7 +48,7 @@ services:
       - esdata2:/usr/share/elasticsearch/data
     networks:
       default:
-        ipv4_address: 10.8.0.22
+        ipv4_address: 172.18.0.22
 #    networks:
 #      - esnet
   elasticsearch3:
@@ -72,7 +72,7 @@ services:
       - esdata3:/usr/share/elasticsearch/data
     networks:
       default:
-        ipv4_address: 10.8.0.23
+        ipv4_address: 172.18.0.23
 #    networks:
 #      - esnet
   elasticsearch4:
@@ -96,7 +96,7 @@ services:
       - esdata4:/usr/share/elasticsearch/data
     networks:
       default:
-        ipv4_address: 10.8.0.24
+        ipv4_address: 172.18.0.24
 #     networks:
 #      - esnet      
 

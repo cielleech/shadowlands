@@ -7,7 +7,7 @@ services:
     hostname: zoo
     networks:
       default:
-        ipv4_address: 10.8.1.3
+        ipv4_address: 172.18.0.31
     ports:
       - "2181:2181"
     container_name: zookeeper
@@ -18,7 +18,7 @@ services:
     image: wurstmeister/kafka
     networks:
       default:
-        ipv4_address: 10.8.1.4
+        ipv4_address: 172.18.0.32
     ports:
       - "9092:9092"
     environment:
@@ -30,7 +30,6 @@ services:
     depends_on:
       - zoo
     container_name: kafka
-
 
 networks:
   default:
