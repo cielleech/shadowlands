@@ -31,7 +31,6 @@ services:
       - zoo
     container_name: kafka
 
-
 networks:
   default:
     external:
