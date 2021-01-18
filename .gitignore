@@ -1,3 +1,9 @@
 mysql/volumes/
 mysql-cluster/volumes/
+tidb/logs/
+tidb/data/
+elasticsearch/esdata1/
+elasticsearch/esdata2/
+elasticsearch/esdata3/
+elasticsearch/esdata4/
 .DS_Store
