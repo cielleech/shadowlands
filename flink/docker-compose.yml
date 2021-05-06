@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  flink-master:
+    image: bde2020/flink-master:1.7.1-hadoop2.7
+    hostname: flink-master
+    container_name: flink-master
+    networks:
+      default:
+        ipv4_address: 172.18.1.61
+
+  flink-worker:
+    image: bde2020/flink-worker:1.7.1-hadoop2.7
+    hostname: flink-worker
+    container_name: flink-worker
+    networks:
+      default:
+        ipv4_address: 172.18.1.62
+    environment:
+      - FLINK_MASTER_PORT_6123_TCP_ADDR=flink-master
+    depends_on:
+      - flink-master
+
+networks:
+  default:
+    external:
+      name: base-net

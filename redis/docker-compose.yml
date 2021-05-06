@@ -1,0 +1,25 @@
+version: "2.0"
+
+services:
+  redis-server:
+    image: redis
+    hostname: redis-server
+    container_name: redis-server
+    volumes:
+      - ./volumes/conf/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - 6379:6379
+    networks:
+      redis-net:
+        ipv4_address: 172.20.2.3
+    command:
+      - redis-server
+      - /usr/local/etc/redis/redis.conf
+
+networks:
+  redis-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.2.0/24
+          gateway: 172.20.2.1
