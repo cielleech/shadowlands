@@ -94,4 +94,4 @@ volumes:
 networks:
   default:
     external:
-      name: base-net
+      name: shadowlands-network
