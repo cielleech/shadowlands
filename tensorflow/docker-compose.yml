@@ -1,0 +1,21 @@
+version: "3.3"
+
+services:
+  tensorflow:
+    image: tensorflow/tensorflow:1.14.0-py3-jupyter
+    hostname: tensorflow
+    container_name: tensorflow
+    networks:
+      default:
+        ipv4_address: 172.18.0.88
+    ports:
+      - 8888:8888
+    environment:
+      - PASSWORD=vox123
+    volumes:
+      - ./volumes/demo:/tf/demo
+
+networks:
+  default:
+    external:
+      name: base-net

@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
   namenode:
@@ -6,33 +6,33 @@ services:
     container_name: namenode
     networks:
       default:
-        ipv4_address: 10.8.83.81
+        ipv4_address: 172.18.1.31
     volumes:
-      - hadoop_namenode:/hadoop/dfs/name
+      - namenode:/hadoop/dfs/name
     environment:
-      - CLUSTER_NAME=vox-cluster
+      - CLUSTER_NAME=vox
     env_file:
       - ./hadoop.env
-
+      
   datanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
     container_name: datanode
     networks:
       default:
-        ipv4_address: 10.8.83.82
+        ipv4_address: 172.18.1.32
     volumes:
-      - hadoop_datanode:/hadoop/dfs/data
+      - datanode:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:50070"
     env_file:
       - ./hadoop.env
-  
+
   resourcemanager:
     image: bde2020/hadoop-resourcemanager:2.0.0-hadoop2.7.4-java8
     container_name: resourcemanager
     networks:
       default:
-        ipv4_address: 10.8.83.83
+        ipv4_address: 172.18.1.33
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
     env_file:
@@ -43,53 +43,32 @@ services:
     container_name: nodemanager
     networks:
       default:
-        ipv4_address: 10.8.83.84
+        ipv4_address: 172.18.1.34
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075 resourcemanager:8088"
     env_file:
       - ./hadoop.env
 
-  historyserver:
+  history:
     image: bde2020/hadoop-historyserver:2.0.0-hadoop2.7.4-java8
     container_name: historyserver
     networks:
       default:
-        ipv4_address: 10.8.83.85
+        ipv4_address: 172.18.1.35
     volumes:
-      - hadoop_historyserver:/hadoop/yarn/timeline
+      - historyserver:/hadoop/yarn/timeline
     environment:
       SERVICE_PRECONDITION: "namenode:50070 datanode:50075 resourcemanager:8088"
     env_file:
       - ./hadoop.env
 
-  hbase:
-    image: bde2020/hbase-standalone:1.0.0-hbase1.2.6
-    container_name: hbase
-    networks:
-      default:
-        ipv4_address: 10.8.83.86
-    volumes:
-      - hbase_data:/hbase-data
-      - hbase_zookeeper_data:/zookeper-data
-    ports:
-      - 16000:16000
-      - 16010:16010
-      - 16020:16020
-      - 16030:16030
-      - 2888:2888
-      - 3888:3888
-      - 2181:2181
-    environment:
-      SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
-    env_file:
-      - ./hbase-standalone.env
-
 volumes:
-  hadoop_namenode:
-  hadoop_datanode:
-  hadoop_historyserver:
-  hbase_data:
-  hbase_zookeeper_data:
+  namenode:
+#    external: true
+  datanode:
+#    external: true
+  historyserver:
+#    external: true
 
 networks:
   default:

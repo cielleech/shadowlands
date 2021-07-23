@@ -1,0 +1,30 @@
+version: "3.3"
+
+services:
+  prometheus-server:
+    image: prom/prometheus
+    hostname: prometheus-server
+    container_name: prometheus-server
+    ports:
+      - 9090:9090
+    networks:
+      default:
+        ipv4_address: 172.18.4.3
+
+  granafa-server:
+    image: grafana/grafana
+    hostname: grafana-server
+    container_name: grafana-server
+    ports:
+      - 3000:3000
+    volumes:
+#      - ./volumes/etc/grafana:/etc/grafana
+      - ./volumes/var/lib/grafana:/var/lib/grafana:rw
+    networks:
+      default:
+        ipv4_address: 172.18.4.4
+  
+networks:
+  default:
+    external:
+      name: shadowlands-network

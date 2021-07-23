@@ -1,10 +1,10 @@
 version: "3.3"
 
 services:
-  vox-mysql:
+  mysql:
     image: mysql:5.7.20
-    hostname: vox-mysql
-    container_name: vox-mysql
+    hostname: mysql
+    container_name: mysql
     networks:
       default:
         ipv4_address: 172.18.0.3
@@ -19,4 +19,4 @@ services:
 networks:
   default:
     external:
-      name: base-net
+      name: shadowlands-network

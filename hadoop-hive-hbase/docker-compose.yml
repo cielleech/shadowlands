@@ -1,0 +1,114 @@
+version: "3"
+
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop2.7.4-java8
+    container_name: namenode
+    networks:
+      default:
+        ipv4_address: 172.18.1.31
+    volumes:
+      - namenode:/hadoop/dfs/name
+    environment:
+      - CLUSTER_NAME=vox
+    env_file:
+      - ./hadoop.env
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
+    container_name: datanode
+    networks:
+      default:
+        ipv4_address: 172.18.1.32
+    volumes:
+      - datanode:/hadoop/dfs/data
+    env_file:
+      - ./hadoop.env
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070"
+
+  hive-server:
+    image: cielleech/hive:2.3.2-mysql-metastore
+    container_name: hive-server
+    networks:
+      default:
+        ipv4_address: 172.18.1.33
+    env_file:
+      - ./hive.env
+    environment:
+      HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:mysql://172.18.0.10:3306/hive"
+      SERVICE_PRECONDITION: "hive-metastore:9083"
+
+  hive-metastore:
+    image: cielleech/hive:2.3.2-mysql-metastore
+    container_name: hive-metastore
+    networks:
+      default:
+        ipv4_address: 172.18.1.34
+    env_file:
+      - ./hive.env
+    command: /opt/hive/bin/hive --service metastore
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
+
+  resourcemanager:
+    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop2.7.4-java8
+    container_name: resourcemanager
+    networks:
+      default:
+        ipv4_address: 172.18.1.35
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
+    env_file:
+      - ./hadoop.env
+
+  nodemanager:
+    image: bde2020/hadoop-nodemanager:2.0.0-hadoop2.7.4-java8
+    container_name: nodemanager
+    networks:
+      default:
+        ipv4_address: 172.18.1.36
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075 resourcemanager:8088"
+    env_file:
+      - ./hadoop.env
+
+  history:
+    image: bde2020/hadoop-historyserver:2.0.0-hadoop2.7.4-java8
+    container_name: historyserver
+    networks:
+      default:
+        ipv4_address: 172.18.1.37
+    volumes:
+      - historyserver:/hadoop/yarn/timeline
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075 resourcemanager:8088"
+    env_file:
+      - ./hadoop.env
+
+  hbase:
+    image: bde2020/hbase-standalone:1.0.0-hbase1.2.6
+    container_name: hbase
+    hostname: hbase
+    networks:
+      default:
+        ipv4_address: 172.18.1.38
+    volumes:
+      - hbase_data:/hbase-data
+      - hbase_zookeeper_data:/zookeeper-data
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
+    env_file:
+      - ./hbase.env
+
+volumes:
+  namenode:
+  datanode:
+  historyserver:
+  hbase_data:
+  hbase_zookeeper_data:  
+
+networks:
+  default:
+    external:
+      name: base-net
